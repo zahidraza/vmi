@@ -1,5 +1,6 @@
 package com.example.vmi.util;
 
+import java.io.InputStream;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -17,16 +18,12 @@ public class MiscUtil {
         return Integer.parseInt(week.replace("Week", ""));
     }
     
-    public static Boolean sendMail(String to,String sub,String msg){
-        
-        String host = "mail.laguna-clothing.com";
-        String user = "itsupport@laguna-clothing.com";
-        String password = "***S***@522";
+    public static Boolean sendMail(InputStream is, String to, String sub, String msg){
+        Properties mailProps = PropUtils.getInstance().getProps(is);
 
-//        String host = "mail.zahidraza.in";
-//        String user = "noreply@zahidraza.in";
-//        String password = "Munnu@90067";
-        
+        String host = mailProps.getProperty("mail.host");
+        String user = mailProps.getProperty("mail.user");
+        String password = mailProps.getProperty("mail.password");
 
         Boolean status = false;
         

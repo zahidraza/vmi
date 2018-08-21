@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
+
 @Service
 @Transactional(readOnly = true)
 public class EmployeeService {
@@ -73,15 +75,17 @@ public class EmployeeService {
         Employee employee = employeeRepository.findOne(id);
         
         String generatedPassword = new RandomString(8).nextString();
-        System.out.println(generatedPassword);
-        
+
         //Sending Email
         String subject = "Password Reset";
         String message =    "\nYou accessed the Password Reset Service of Vendor Managed Inventory App. \n\n"+
                             "New Password is: " + generatedPassword + " \n\n";
         
         message += "Note: Do change this password immediately.";
-        Boolean result = MiscUtil.sendMail(employee.getEmail(), subject, message);
+
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("application.properties");
+
+        Boolean result = MiscUtil.sendMail(is, employee.getEmail(), subject, message);
         
         if(result){
             employee.setPassword(generatedPassword);

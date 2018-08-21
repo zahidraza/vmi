@@ -153,7 +153,7 @@
                             <finalName>${project.name}</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
-                                <descriptor>../vmi/assembly.xml</descriptor>
+                                <descriptor>./assembly.xml</descriptor>
                             </descriptors>
                             <outputDirectory>${basedir}/target</outputDirectory>
                         </configuration>
